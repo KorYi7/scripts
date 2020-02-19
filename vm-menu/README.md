@@ -8,7 +8,7 @@ left click on menu items to run respective scripts and close the menu
 all files from bin folder should be somewhere in PATH
 
 polybar config:
-
+```
 [module/checkVM]
 type = custom/script
 tail = true
@@ -19,3 +19,4 @@ format-prefix-foreground = ${colors.foreground-alt}
 format-prefix = VM:
 format-prefix-underline = ${colors.background}
 format-underline = ${colors.primary}
+```
