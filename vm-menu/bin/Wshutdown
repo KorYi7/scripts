@@ -1,0 +1,2 @@
+virsh -c qemu:///system shutdown win10
+W-menu

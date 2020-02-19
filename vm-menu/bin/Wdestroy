@@ -1,0 +1,2 @@
+virsh -c qemu:///system destroy win10
+W-menu

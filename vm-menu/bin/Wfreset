@@ -1,0 +1,2 @@
+virsh -c qemu:///system reboot win10
+W-menu
