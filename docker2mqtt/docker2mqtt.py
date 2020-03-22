@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import subprocess
 import time
+from subprocess import PIPE
 from secret import mqttuser
 from secret import mqttpass
 from secret import mqtturl
@@ -15,7 +16,8 @@ from secret import dockerssh
 containers = ["tsukihi"]
 states = [""]
 while True:
-	output=subprocess.run(["ssh", dockerssh, '''docker ps -a --format "{{.Names}};{{.Status}}"'''],capture_output=True)
+	output=subprocess.run(["ssh", dockerssh, '''docker ps -a --format "{{.Names}};{{.Status}}"'''],stdout=PIPE,stderr=PIPE)
+	# output=subprocess.run(["ssh", dockerssh, '''docker ps -a --format "{{.Names}};{{.Status}}"'''],capture_output=True)
 	if output.returncode == 0:
 		if states[0]!="Up":
 			states[0]="Up"
