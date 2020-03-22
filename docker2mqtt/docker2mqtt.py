@@ -45,7 +45,7 @@ while True:
 				payload+='"'+containers[i]+'":"Down",'
 				states[i]="Down"
 	if payload!="{":
-		client.publish("docker2mqtt/StateChanged",payload+"}")
+		client.publish("docker2mqtt/StateChanged",payload[:-1]+"}")
 		# print(payload[:-1]+"}")
 		payload="{"
 	time.sleep(60)
