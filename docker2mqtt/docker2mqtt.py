@@ -12,6 +12,7 @@ client = mqtt.Client("docker")
 
 client.username_pw_set(mqttuser,mqttpass)
 client.connect(mqtturl)
+client.loop_start()
 
 containers = ["tsukihi"]
 states = [""]
@@ -23,7 +24,7 @@ while True:
 	if output.returncode == 0:
 		if states[0]!="Up":
 			states[0]="Up"
-			payload+='"'+containers[0]+'":"Up"'
+			payload+='"'+containers[0]+'":"Up",'
 		for line in output.stdout.decode("utf-8").splitlines():
 			name, rawstate = line.split(";",1)
 			state = rawstate.split(" ",1)[0]
@@ -45,7 +46,12 @@ while True:
 				payload+='"'+containers[i]+'":"Down",'
 				states[i]="Down"
 	if payload!="{":
-		client.publish("docker2mqtt/StateChanged",payload[:-1]+"}")
+		err=client.publish("docker2mqtt/StateChanged",payload[:-1]+"}")
+		if err.rc==mqtt.MQTT_ERR_NO_CONN:
+			client.reconnect()
+			client.publish("docker2mqtt/StateChanged",payload[:-1]+"}")
+		
 		# print(payload[:-1]+"}")
+		
 		payload="{"
-	time.sleep(60)
+	time.sleep(45)
