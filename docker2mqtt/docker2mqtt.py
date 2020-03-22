@@ -26,6 +26,8 @@ while True:
 		for line in output.stdout.decode("utf-8").splitlines():
 			name, rawstate = line.split(";",1)
 			state = rawstate.split(" ",1)[0]
+			if state!="Up":
+				state="Down"
 			try:
 				index=containers.index(name)
 			except ValueError:
